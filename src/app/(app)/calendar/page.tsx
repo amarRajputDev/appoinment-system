@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import dayjs from 'dayjs'
 import toast from 'react-hot-toast'
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -15,23 +15,36 @@ export default function CalendarPage() {
   const [selected, setSelected] = useState<string | null>(null)
   const [appointments, setAppointments] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const reqIdRef = useRef(0)
 
-  const from = view === 'month' ? cursor.startOf('month') : cursor.startOf('week')
-  const to = view === 'month' ? cursor.endOf('month') : cursor.endOf('week')
+  const rangeKey =
+    view === 'month'
+      ? `${cursor.format('YYYY-MM')}|month`
+      : `${cursor.startOf('week').format('YYYY-MM-DD')}|week`
+
+  const fromStr =
+    view === 'month' ? cursor.startOf('month').format('YYYY-MM-DD') : cursor.startOf('week').format('YYYY-MM-DD')
+  const toStr =
+    view === 'month' ? cursor.endOf('month').format('YYYY-MM-DD') : cursor.endOf('week').format('YYYY-MM-DD')
 
   useEffect(() => {
-    setLoading(true)
-    const qs = new URLSearchParams({
-      from: from.format('YYYY-MM-DD'),
-      to: to.format('YYYY-MM-DD'),
-      limit: '200',
-    })
+    const reqId = ++reqIdRef.current
+    const qs = new URLSearchParams({ from: fromStr, to: toStr, limit: '200' })
     api
       .get(`/api/appointments?${qs}`)
-      .then((d) => setAppointments(d.appointments || []))
-      .catch((e) => toast.error(e.message))
-      .finally(() => setLoading(false))
-  }, [from, to])
+      .then((d) => {
+        if (reqId !== reqIdRef.current) return
+        setAppointments(d.appointments || [])
+      })
+      .catch((e) => {
+        if (reqId !== reqIdRef.current) return
+        toast.error(e.message)
+      })
+      .finally(() => {
+        if (reqId !== reqIdRef.current) return
+        setLoading(false)
+      })
+  }, [fromStr, toStr, rangeKey])
 
   const byDay = useMemo(() => {
     const map = new Map<string, any[]>()
@@ -64,11 +77,13 @@ export default function CalendarPage() {
   }, [cursor])
 
   const selectedItems = selected ? byDay.get(selected) || [] : []
+  const todayKey = dayjs().format('YYYY-MM-DD')
+  const isFetching = loading && appointments.length === 0
 
-  if (loading && appointments.length === 0) return <PageSkeleton />
+  if (isFetching) return <PageSkeleton />
 
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 transition-opacity duration-200 ${loading ? 'opacity-70' : 'opacity-100'}`}>
       <PageHeader
         eyebrow="Timeline"
         title="Calendar"
@@ -95,6 +110,7 @@ export default function CalendarPage() {
                       : { color: 'var(--muted)' }
                   }
                   onClick={() => {
+                    if (view === v) return
                     setView(v)
                     setSelected(null)
                   }}
@@ -127,9 +143,14 @@ export default function CalendarPage() {
         }
       />
 
-      <div className="grid grid-cols-7 gap-1 text-center text-[0.68rem] font-bold tracking-[0.12em] uppercase" style={{ color: 'var(--muted)' }}>
+      <div
+        className="grid grid-cols-7 gap-1 text-center text-[0.68rem] font-bold tracking-[0.12em] uppercase"
+        style={{ color: 'var(--muted)' }}
+      >
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
-          <div key={d} className="py-1">{d}</div>
+          <div key={d} className="py-1">
+            {d}
+          </div>
         ))}
       </div>
 
@@ -143,9 +164,7 @@ export default function CalendarPage() {
               key={key}
               type="button"
               onClick={() => setSelected(key)}
-              className={`cal-day ${selected === key ? 'selected' : ''} ${
-                day.isSame(dayjs(), 'day') ? 'today' : ''
-              }`}
+              className={`cal-day ${selected === key ? 'selected' : ''} ${key === todayKey ? 'today' : ''}`}
             >
               <div className="flex items-center justify-between">
                 <span className="font-display text-sm font-semibold">{day.date()}</span>
@@ -154,25 +173,33 @@ export default function CalendarPage() {
                 )}
               </div>
               <div className="mt-1.5 space-y-1">
-                {items.slice(0, 3).map((a) => (
-                  <div
-                    key={a._id}
-                    className="truncate rounded-md px-1.5 py-0.5 text-[10px] font-semibold"
-                    style={{
-                      background:
-                        a.status === 'cancelled'
-                          ? 'rgba(190,18,60,0.12)'
-                          : 'color-mix(in srgb, var(--accent) 14%, transparent)',
-                      color: a.status === 'cancelled' ? '#e11d48' : 'var(--accent)',
-                    }}
-                  >
-                    {a.startTime} {a.service?.title}
+                {items.length === 0 ? (
+                  <div className="text-[10px] font-medium" style={{ color: 'var(--muted)' }}>
+                    No visits
                   </div>
-                ))}
-                {items.length > 3 && (
-                  <div className="text-[10px]" style={{ color: 'var(--muted)' }}>
-                    +{items.length - 3} more
-                  </div>
+                ) : (
+                  <>
+                    {items.slice(0, 3).map((a) => (
+                      <div
+                        key={a._id}
+                        className="truncate rounded-md px-1.5 py-0.5 text-[10px] font-semibold"
+                        style={{
+                          background:
+                            a.status === 'cancelled'
+                              ? 'rgba(190,18,60,0.12)'
+                              : 'color-mix(in srgb, var(--accent) 14%, transparent)',
+                          color: a.status === 'cancelled' ? '#e11d48' : 'var(--accent)',
+                        }}
+                      >
+                        {a.startTime} {a.service?.title}
+                      </div>
+                    ))}
+                    {items.length > 3 && (
+                      <div className="text-[10px]" style={{ color: 'var(--muted)' }}>
+                        +{items.length - 3} more
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </button>
