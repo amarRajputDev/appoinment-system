@@ -824,3 +824,96 @@ https://react.dev/link/hydration-mismatch
  POST /api/auth/logout 200 in 112ms (next.js: 82ms, application-code: 29ms)
  GET /login 200 in 81ms (next.js: 58ms, application-code: 23ms)
  GET /login 200 in 28ms (next.js: 8ms, application-code: 20ms)
+✓ Compiled in 1064ms
+✓ Compiled in 340ms
+ GET /login 200 in 131ms (next.js: 45ms, application-code: 86ms)
+✓ Compiled in 129ms
+✓ Compiled in 237ms
+✓ Compiled in 142ms
+✓ Compiled in 162ms
+✓ Compiled in 172ms
+✓ Compiled in 179ms
+✓ Compiled in 179ms
+ GET /login 200 in 106ms (next.js: 31ms, application-code: 75ms)
+ GET /api/auth/me 401 in 48ms (next.js: 16ms, application-code: 32ms)
+ GET /api/auth/me 401 in 66ms (next.js: 17ms, application-code: 49ms)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+      <LoadingBoundary name="login/" loading={null}>
+        <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+          <RedirectBoundary>
+            <RedirectErrorBoundary router={{...}}>
+              <InnerLayoutRouter url="/login" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+                <SegmentViewNode type="page" pagePath="login/page...">
+                  <SegmentTrieNode>
+                  <ClientPageRoot Component={function LoginPage} serverProvidedParams={{...}}>
+                    <LoginPage params={Promise} searchParams={Promise}>
+                      <Suspense>
+                        <LoginForm>
+                          <div className="auth-shell">
+                            <aside>
+                            <div
++                             className="relative flex items-center justify-center px-5 py-12 sm:px-10"
+-                             className="relative flex items-center justify-center px-4 py-10 sm:px-10 sm:py-12"
+                            >
+                              <div
++                               className="absolute right-5 top-5"
+-                               className="absolute right-4 top-4 sm:right-5 sm:top-5"
+                              >
+                                <ThemeToggle>
+                                  <button
+                                    type="button"
+                                    onClick={function ThemeProvider.useMemo[value]}
++                                   className={"btn-secondary p-2 "}
+-                                   className={"btn-secondary shrink-0 p-2 "}
+                                    aria-label="Toggle theme"
+                                  >
+                              <div className="w-full max...">
+                                <div
++                                 className="mb-8"
+-                                 className="mb-6 sm:mb-8"
+                                >
+                                  <div>
+                                  <h2
++                                   className="font-display text-3xl font-semibold tracking-tight"
+-                                   className="font-display text-2xl font-semibold tracking-tight sm:text-3xl"
+                                  >
++                                   Enter the studio
+                                  ...
+                                <form>
+                                <div
++                                 className="mt-5 flex items-center justify-between text-sm"
+-                                 className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm"
+                                >
+                                ...
+                ...
+              ...
+ 
+    at console.overrideMethod [as error] (chrome-extension://fmkadmapgofadopljbjfkapdkoienihi/build/installHook.js:1:168574) (chrome-extension://fmkadmapgofadopljbjfkapdkoienihi/build/installHook.js:1:168574)
+ GET /login 200 in 72ms (next.js: 19ms, application-code: 54ms)
+ GET /login 200 in 97ms (next.js: 12ms, application-code: 85ms)
+ GET /calendar 200 in 519ms (next.js: 184ms, application-code: 334ms)
+ GET /api/auth/me 401 in 205ms (next.js: 101ms, application-code: 104ms)
+ GET /api/auth/me 401 in 79ms (next.js: 49ms, application-code: 29ms)
+ GET /login 200 in 130ms (next.js: 75ms, application-code: 55ms)
+ GET /calendar 200 in 109ms (next.js: 13ms, application-code: 96ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET / 200 in 110ms (next.js: 44ms, application-code: 66ms)
+ GET /api/auth/me 401 in 64ms (next.js: 19ms, application-code: 45ms)
+ GET /api/auth/me 401 in 48ms (next.js: 20ms, application-code: 28ms)
+ GET / 200 in 162ms (next.js: 21ms, application-code: 142ms)
+ GET /register 200 in 124ms (next.js: 86ms, application-code: 38ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /login 200 in 83ms (next.js: 52ms, application-code: 31ms)

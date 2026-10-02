@@ -36,25 +36,26 @@ export default function ProvidersPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {providers.map((p) => (
-            <Card key={p._id} hover className="p-5">
+            <Card key={p._id} hover className="p-4 sm:p-5">
               <div className="flex items-center gap-3">
                 <div
-                  className="flex h-12 w-12 items-center justify-center rounded-full text-white"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white sm:h-12 sm:w-12"
                   style={{ background: 'linear-gradient(145deg, #ea580c, #9a3412)' }}
                 >
-                  <User2 className="h-6 w-6" />
+                  <User2 className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
-                <div>
-                  <div className="font-display font-semibold tracking-tight">{p.name}</div>
+                <div className="min-w-0">
+                  <div className="truncate font-display font-semibold tracking-tight">{p.name}</div>
                   <Badge status="provider">provider</Badge>
                 </div>
               </div>
               <div className="mt-4 space-y-2 text-sm">
-                <div className="flex items-center gap-2" style={{ color: 'var(--muted)' }}>
-                  <Mail className="h-4 w-4 opacity-60" /> {p.email}
+                <div className="flex items-center gap-2 min-w-0" style={{ color: 'var(--muted)' }}>
+                  <Mail className="h-4 w-4 shrink-0 opacity-60" />
+                  <span className="truncate">{p.email}</span>
                 </div>
                 <div className="flex items-center gap-2" style={{ color: 'var(--muted)' }}>
-                  <Phone className="h-4 w-4 opacity-60" /> {p.phone || '—'}
+                  <Phone className="h-4 w-4 shrink-0 opacity-60" /> {p.phone || '—'}
                 </div>
               </div>
               <Link href={`/availability?provider=${p._id}`} className="btn-secondary mt-4 w-full text-sm">

@@ -80,15 +80,15 @@ function LoginForm() {
         </div>
       </aside>
 
-      <div className="relative flex items-center justify-center px-5 py-12 sm:px-10">
-        <div className="absolute right-5 top-5">
+      <div className="relative flex items-center justify-center px-4 py-10 sm:px-10 sm:py-12">
+        <div className="absolute right-4 top-4 sm:right-5 sm:top-5">
           <ThemeToggle />
         </div>
 
         <div className="w-full max-w-[400px]">
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <div className="eyebrow mb-2">Sign in</div>
-            <h2 className="font-display text-3xl font-semibold tracking-tight">Enter the studio</h2>
+            <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">Enter the studio</h2>
             <p className="mt-2 text-sm" style={{ color: 'var(--muted)' }}>
               Use your Tempo credentials to continue.
             </p>
@@ -132,7 +132,7 @@ function LoginForm() {
             </button>
           </form>
 
-          <div className="mt-5 flex items-center justify-between text-sm">
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm">
             <Link href="/forgot-password" className="font-medium text-[color:var(--accent)] hover:underline">
               Forgot password?
             </Link>

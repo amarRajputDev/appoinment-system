@@ -59,7 +59,7 @@ export default function UsersPage() {
         description="Administer accounts, roles, and access across Tempo."
       />
       <div className="flex flex-wrap gap-2">
-        <div className="relative">
+        <div className="relative min-w-[180px] flex-1 sm:max-w-xs">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
           <input
             className="input input-icon"
@@ -72,7 +72,7 @@ export default function UsersPage() {
           />
         </div>
         <select
-          className="input w-auto"
+          className="input min-w-[130px] sm:w-auto"
           value={role}
           onChange={(e) => {
             setRole(e.target.value)
@@ -138,7 +138,7 @@ export default function UsersPage() {
         </Card>
       )}
 
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
         <span style={{ color: 'var(--muted)' }}>Page {data?.page || 1} of {data?.pages || 1}</span>
         <div className="flex gap-2">
           <button className="btn-secondary px-3 py-1.5" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>Prev</button>

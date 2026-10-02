@@ -14,10 +14,10 @@ export default function PageHeader({
   className?: string
 }) {
   return (
-    <div className={clsx('flex flex-wrap items-end justify-between gap-4', className)}>
-      <div className="min-w-0">
+    <div className={clsx('flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between', className)}>
+      <div className="min-w-0 flex-1">
         {eyebrow && <div className="eyebrow mb-1.5">{eyebrow}</div>}
-        <h1 className="font-display text-[1.85rem] font-semibold leading-tight tracking-tight sm:text-[2.1rem]">
+        <h1 className="font-display text-[1.55rem] font-semibold leading-tight tracking-tight sm:text-[1.85rem] lg:text-[2.1rem]">
           {title}
         </h1>
         {description && (
@@ -26,7 +26,11 @@ export default function PageHeader({
           </p>
         )}
       </div>
-      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+      {actions && (
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
+          {actions}
+        </div>
+      )}
     </div>
   )
 }

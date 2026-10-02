@@ -112,7 +112,7 @@ export default function AppointmentsPage() {
       />
 
       <div className="flex flex-wrap gap-2">
-        <div className="relative min-w-[180px] flex-1 sm:max-w-xs">
+        <div className="relative min-w-[160px] flex-1 sm:max-w-xs">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
           <input
             className="input input-icon"
@@ -124,7 +124,7 @@ export default function AppointmentsPage() {
             }}
           />
         </div>
-        <div className="relative">
+        <div className="relative min-w-[140px] sm:min-w-[170px]">
           <Filter className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
           <select
             className="input input-icon"
@@ -228,11 +228,11 @@ export default function AppointmentsPage() {
 
           <div className="space-y-3 md:hidden">
             {appointments.map((a: any) => (
-              <Card key={a._id}>
+              <Card key={a._id} className="p-4">
                 <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <div className="font-semibold tracking-tight">{a.service?.title}</div>
-                    <div className="text-sm" style={{ color: 'var(--muted)' }}>{a.provider?.name}</div>
+                  <div className="min-w-0">
+                    <div className="truncate font-semibold tracking-tight">{a.service?.title}</div>
+                    <div className="truncate text-sm" style={{ color: 'var(--muted)' }}>{a.provider?.name}</div>
                   </div>
                   <Badge status={a.status} />
                 </div>
@@ -271,7 +271,7 @@ export default function AppointmentsPage() {
             ))}
           </div>
 
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
             <span style={{ color: 'var(--muted)' }}>
               Page {data.page} of {data.pages}
             </span>

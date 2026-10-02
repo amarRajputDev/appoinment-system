@@ -60,18 +60,18 @@ export default function ResetPasswordPage({ params }: { params: Promise<{ token:
         <div className="relative z-10 text-xs opacity-45">© {new Date().getFullYear()} Tempo Studio</div>
       </aside>
 
-      <div className="relative flex items-center justify-center px-5 py-12 sm:px-10">
-        <div className="absolute right-5 top-5">
+      <div className="relative flex items-center justify-center px-4 py-10 sm:px-10 sm:py-12">
+        <div className="absolute right-4 top-4 sm:right-5 sm:top-5">
           <ThemeToggle />
         </div>
         <div className="w-full max-w-[400px]">
           <div className="eyebrow mb-2">Reset password</div>
-          <h2 className="font-display text-3xl font-semibold tracking-tight">Set a new password</h2>
+          <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">Set a new password</h2>
           <p className="mt-2 text-sm" style={{ color: 'var(--muted)' }}>
             Minimum 6 characters. Keep it private.
           </p>
 
-          <form onSubmit={onSubmit} className="mt-8 space-y-5">
+          <form onSubmit={onSubmit} className="mt-6 space-y-5 sm:mt-8">
             <div>
               <label className="label" htmlFor="password">New password</label>
               <div className="relative">

@@ -93,12 +93,12 @@ export default function CalendarPage() {
             : `${weekDays[0].format('MMM D')} – ${weekDays[6].format('MMM D, YYYY')}`
         }
         actions={
-          <div className="flex items-center gap-2">
-            <div className="flex overflow-hidden rounded-xl border border-[color:var(--line)] bg-[color:var(--surface)]">
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+            <div className="flex min-w-0 flex-1 overflow-hidden rounded-xl border border-[color:var(--line)] bg-[color:var(--surface)] sm:flex-none">
               {(['month', 'week'] as const).map((v) => (
                 <button
                   key={v}
-                  className={`px-3.5 py-2 text-sm font-semibold capitalize transition ${
+                  className={`flex-1 px-3 py-2 text-sm font-semibold capitalize transition sm:flex-none sm:px-3.5 ${
                     view === v ? 'text-white' : ''
                   }`}
                   style={
@@ -119,99 +119,101 @@ export default function CalendarPage() {
                 </button>
               ))}
             </div>
-            <button
-              className="btn-secondary p-2"
-              onClick={() => setCursor((c) => c.subtract(1, view === 'month' ? 'month' : 'week'))}
-              aria-label="Previous"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <button
-              className="btn-secondary px-3 py-2"
-              onClick={() => setCursor(dayjs().startOf(view === 'month' ? 'month' : 'week'))}
-            >
-              Today
-            </button>
-            <button
-              className="btn-secondary p-2"
-              onClick={() => setCursor((c) => c.add(1, view === 'month' ? 'month' : 'week'))}
-              aria-label="Next"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
+            <div className="flex items-center gap-1.5">
+              <button
+                className="btn-secondary p-2"
+                onClick={() => setCursor((c) => c.subtract(1, view === 'month' ? 'month' : 'week'))}
+                aria-label="Previous"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                className="btn-secondary px-2.5 py-2 text-sm sm:px-3"
+                onClick={() => setCursor(dayjs().startOf(view === 'month' ? 'month' : 'week'))}
+              >
+                Today
+              </button>
+              <button
+                className="btn-secondary p-2"
+                onClick={() => setCursor((c) => c.add(1, view === 'month' ? 'month' : 'week'))}
+                aria-label="Next"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         }
       />
 
-      <div
-        className="grid grid-cols-7 gap-1 text-center text-[0.68rem] font-bold tracking-[0.12em] uppercase"
-        style={{ color: 'var(--muted)' }}
-      >
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
-          <div key={d} className="py-1">
-            {d}
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-7">
-        {(view === 'month' ? monthDays : weekDays).map((day, idx) => {
-          if (!day) return <div key={`empty-${idx}`} className="min-h-[6.5rem]" />
-          const key = day.format('YYYY-MM-DD')
-          const items = byDay.get(key) || []
-          return (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setSelected(key)}
-              className={`cal-day ${selected === key ? 'selected' : ''} ${key === todayKey ? 'today' : ''}`}
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-display text-sm font-semibold">{day.date()}</span>
-                {items.length > 0 && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]" />
-                )}
-              </div>
-              <div className="mt-1.5 space-y-1">
-                {items.length === 0 ? (
-                  <div className="text-[10px] font-medium" style={{ color: 'var(--muted)' }}>
-                    No visits
-                  </div>
-                ) : (
-                  <>
-                    {items.slice(0, 3).map((a) => (
-                      <div
-                        key={a._id}
-                        className="truncate rounded-md px-1.5 py-0.5 text-[10px] font-semibold"
-                        style={{
-                          background:
-                            a.status === 'cancelled'
-                              ? 'rgba(190,18,60,0.12)'
-                              : 'color-mix(in srgb, var(--accent) 14%, transparent)',
-                          color: a.status === 'cancelled' ? '#e11d48' : 'var(--accent)',
-                        }}
-                      >
-                        {a.startTime} {a.service?.title}
-                      </div>
-                    ))}
-                    {items.length > 3 && (
-                      <div className="text-[10px]" style={{ color: 'var(--muted)' }}>
-                        +{items.length - 3} more
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            </button>
-          )
-        })}
+      <div className="overflow-x-auto pb-1">
+        <div className="grid min-w-[560px] grid-cols-7 gap-1 text-center text-[0.68rem] font-bold tracking-[0.12em] uppercase sm:min-w-0" style={{ color: 'var(--muted)' }}>
+          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+            <div key={d} className="py-1">
+              {d}
+            </div>
+          ))}
+        </div>
+        <div className="mt-1 grid min-w-[560px] grid-cols-7 gap-1.5 sm:min-w-0">
+          {(view === 'month' ? monthDays : weekDays).map((day, idx) => {
+            if (!day) return <div key={`empty-${idx}`} className="min-h-[4.5rem] sm:min-h-[6.5rem]" />
+            const key = day.format('YYYY-MM-DD')
+            const items = byDay.get(key) || []
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setSelected(key)}
+                className={`cal-day min-h-[4.5rem] sm:min-h-[6.5rem] ${selected === key ? 'selected' : ''} ${
+                  key === todayKey ? 'today' : ''
+                }`}
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-display text-xs font-semibold sm:text-sm">{day.date()}</span>
+                  {items.length > 0 && (
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--accent)]" />
+                  )}
+                </div>
+                <div className="mt-1 space-y-1">
+                  {items.length === 0 ? (
+                    <div className="text-[9px] font-medium sm:text-[10px]" style={{ color: 'var(--muted)' }}>
+                      No visits
+                    </div>
+                  ) : (
+                    <>
+                      {items.slice(0, 2).map((a) => (
+                        <div
+                          key={a._id}
+                          className="truncate rounded-md px-1 py-0.5 text-[9px] font-semibold sm:px-1.5 sm:text-[10px]"
+                          style={{
+                            background:
+                              a.status === 'cancelled'
+                                ? 'rgba(190,18,60,0.12)'
+                                : 'color-mix(in srgb, var(--accent) 14%, transparent)',
+                            color: a.status === 'cancelled' ? '#e11d48' : 'var(--accent)',
+                          }}
+                        >
+                          {a.startTime} {a.service?.title}
+                        </div>
+                      ))}
+                      {items.length > 2 && (
+                        <div className="text-[9px] sm:text-[10px]" style={{ color: 'var(--muted)' }}>
+                          +{items.length - 2} more
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </button>
+            )
+          })}
+        </div>
       </div>
 
       <Card>
-        <div className="mb-4 flex items-center justify-between gap-2">
-          <div>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+          <div className="min-w-0">
             <div className="eyebrow mb-1">Day detail</div>
-            <h2 className="font-display text-lg font-semibold tracking-tight">
+            <h2 className="font-display text-base font-semibold tracking-tight sm:text-lg">
               {selected ? dayjs(selected).format('dddd, MMM D') : 'Select a day'}
             </h2>
           </div>
@@ -232,11 +234,11 @@ export default function CalendarPage() {
         ) : (
           <ul className="divide-y divide-[color:var(--line)]">
             {selectedItems.map((a) => (
-              <li key={a._id} className="flex flex-wrap items-center gap-3 py-3">
+              <li key={a._id} className="flex flex-wrap items-center gap-2 py-3 sm:gap-3">
                 <CalendarDays className="h-4 w-4 shrink-0 text-[color:var(--accent)]" />
                 <div className="min-w-0 flex-1">
-                  <div className="font-semibold tracking-tight">{a.service?.title}</div>
-                  <div className="text-sm" style={{ color: 'var(--muted)' }}>
+                  <div className="truncate font-semibold tracking-tight">{a.service?.title}</div>
+                  <div className="truncate text-sm" style={{ color: 'var(--muted)' }}>
                     {a.provider?.name} · {a.startTime}–{a.endTime}
                   </div>
                 </div>

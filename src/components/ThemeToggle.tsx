@@ -8,7 +8,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     <button
       type="button"
       onClick={toggle}
-      className={`btn-secondary p-2 ${className}`}
+      className={`btn-secondary shrink-0 p-2 ${className}`}
       aria-label="Toggle theme"
     >
       {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}

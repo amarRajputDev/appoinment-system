@@ -115,7 +115,7 @@ export default function ServicesPage() {
               {s.description && (
                 <p className="mt-3 text-sm" style={{ color: 'var(--muted)' }}>{s.description}</p>
               )}
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
                 <div className="text-lg font-bold text-[color:var(--accent)]">${s.price}</div>
                 <div className="text-sm" style={{ color: 'var(--muted)' }}>{s.provider?.name}</div>
               </div>

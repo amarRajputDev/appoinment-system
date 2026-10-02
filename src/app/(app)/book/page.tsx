@@ -13,7 +13,7 @@ const steps = ['Service', 'Provider', 'Date & slot', 'Confirm']
 
 function StepBar({ step, onJump }: { step: number; onJump: (i: number) => void }) {
   return (
-    <div className="panel flex flex-wrap items-center gap-2 p-2.5">
+    <div className="panel flex flex-wrap items-center gap-1.5 p-2 sm:gap-2 sm:p-2.5">
       {steps.map((s, i) => {
         const state = i < step ? 'done' : i === step ? 'current' : 'todo'
         return (
@@ -22,7 +22,7 @@ function StepBar({ step, onJump }: { step: number; onJump: (i: number) => void }
             type="button"
             onClick={() => onJump(i)}
             disabled={i > step}
-            className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition ${
+            className={`flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl px-2 py-2 text-sm font-semibold transition sm:flex-none sm:px-3.5 ${
               state === 'current'
                 ? 'text-white shadow-lg'
                 : state === 'done'
@@ -39,10 +39,12 @@ function StepBar({ step, onJump }: { step: number; onJump: (i: number) => void }
             }
           >
             <span
-              className={`step-dot ${state === 'done' ? 'done' : ''} ${state === 'current' ? 'current' : ''}`}
+              className={`step-dot shrink-0 ${state === 'done' ? 'done' : ''} ${state === 'current' ? 'current' : ''}`}
             />
-            <span className="text-[0.78rem] tracking-wide">{i + 1}. {s}</span>
-            {state === 'done' && <CheckCircle2 className="h-3.5 w-3.5" />}
+            <span className="truncate text-[0.72rem] tracking-wide sm:text-[0.78rem]">
+              {i + 1}. {s}
+            </span>
+            {state === 'done' && <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />}
           </button>
         )
       })}
@@ -181,20 +183,20 @@ export default function BookAppointmentPage() {
                   setProviderId(p._id)
                   setStartTime('')
                 }}
-                className={`panel panel-hover flex w-full items-center gap-3 p-4 text-left ${
+                className={`panel panel-hover flex w-full items-center gap-3 p-3.5 text-left sm:p-4 ${
                   providerId === p._id ? 'border-[color:var(--accent)]' : ''
                 }`}
                 style={providerId === p._id ? { borderColor: 'var(--accent)', boxShadow: '0 0 0 3px var(--accent-soft)' } : undefined}
               >
                 <div
-                  className="flex h-11 w-11 items-center justify-center rounded-full text-white"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white"
                   style={{ background: 'linear-gradient(145deg, #ea580c, #9a3412)' }}
                 >
                   <User2 className="h-5 w-5" />
                 </div>
-                <div>
-                  <div className="font-semibold">{p.name}</div>
-                  <div className="text-sm" style={{ color: 'var(--muted)' }}>{p.email}</div>
+                <div className="min-w-0">
+                  <div className="truncate font-semibold">{p.name}</div>
+                  <div className="truncate text-sm" style={{ color: 'var(--muted)' }}>{p.email}</div>
                 </div>
               </button>
             ))}
@@ -273,7 +275,7 @@ export default function BookAppointmentPage() {
           </div>
         )}
 
-        <div className="mt-7 flex justify-between gap-2">
+        <div className="mt-6 flex flex-wrap justify-between gap-2 sm:mt-7">
           <button
             type="button"
             className="btn-secondary"

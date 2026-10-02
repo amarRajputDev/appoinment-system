@@ -95,7 +95,7 @@ export default function AvailabilityPage() {
         <PageSkeleton />
       ) : (
         <>
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {DAYS.map((label, idx) => {
               const day = weekly.find((w) => w.day === idx) || defaultWeekly[idx]
               return (
@@ -125,7 +125,7 @@ export default function AvailabilityPage() {
           </div>
 
           <Card>
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
               <h2 className="font-semibold">Breaks</h2>
               <button className="btn-secondary text-xs" onClick={() => setBreaks((b) => [...b, { start: '12:00', end: '13:00' }])}>
                 <Plus className="h-3.5 w-3.5" /> Add break
@@ -136,14 +136,14 @@ export default function AvailabilityPage() {
                 <div key={i} className="flex flex-wrap items-center gap-2">
                   <input
                     type="time"
-                    className="input w-32"
+                    className="input min-w-[8.5rem] flex-1 sm:w-32 sm:flex-none"
                     value={b.start}
                     onChange={(e) => setBreaks((list) => list.map((x, j) => (j === i ? { ...x, start: e.target.value } : x)))}
                   />
                   <span style={{ color: 'var(--muted)' }}>to</span>
                   <input
                     type="time"
-                    className="input w-32"
+                    className="input min-w-[8.5rem] flex-1 sm:w-32 sm:flex-none"
                     value={b.end}
                     onChange={(e) => setBreaks((list) => list.map((x, j) => (j === i ? { ...x, end: e.target.value } : x)))}
                   />
@@ -169,7 +169,7 @@ export default function AvailabilityPage() {
               ))}
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
-              <input type="date" className="input w-auto" value={newOff} onChange={(e) => setNewOff(e.target.value)} />
+              <input type="date" className="input min-w-[10rem] flex-1 sm:w-auto sm:flex-none" value={newOff} onChange={(e) => setNewOff(e.target.value)} />
               <button
                 className="btn-secondary"
                 onClick={() => {

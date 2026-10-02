@@ -47,17 +47,17 @@ export default function ProfilePage() {
         description="Manage your personal details, contact info, and password."
       />
 
-      <Card className="p-6 sm:p-7">
-        <div className="mb-7 flex items-center gap-4">
+      <Card className="p-5 sm:p-6 lg:p-7">
+        <div className="mb-6 flex flex-wrap items-center gap-3 sm:mb-7 sm:gap-4">
           <div
-            className="flex h-16 w-16 items-center justify-center rounded-2xl text-white shadow-lg"
+            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-white shadow-lg sm:h-16 sm:w-16"
             style={{ background: 'linear-gradient(145deg, #ea580c, #9a3412)' }}
           >
-            <User2 className="h-8 w-8" />
+            <User2 className="h-7 w-7 sm:h-8 sm:w-8" />
           </div>
-          <div>
-            <div className="font-display text-lg font-semibold tracking-tight">{user?.name}</div>
-            <div className="mt-1.5 flex gap-2">
+          <div className="min-w-0">
+            <div className="truncate font-display text-base font-semibold tracking-tight sm:text-lg">{user?.name}</div>
+            <div className="mt-1.5 flex flex-wrap gap-2">
               <Badge status={user?.role} />
               <Badge status={user?.isActive ? 'active' : 'inactive'} />
             </div>
@@ -103,14 +103,14 @@ export default function ProfilePage() {
         </form>
       </Card>
 
-      <Card className="flex items-center justify-between gap-4 p-5">
+      <Card className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <div>
           <div className="font-semibold tracking-tight">Appearance</div>
           <div className="text-sm" style={{ color: 'var(--muted)' }}>
             Currently on {theme} mode
           </div>
         </div>
-        <button className="btn-secondary" onClick={toggle}>
+        <button className="btn-secondary shrink-0" onClick={toggle}>
           Switch to {theme === 'dark' ? 'light' : 'dark'}
         </button>
       </Card>

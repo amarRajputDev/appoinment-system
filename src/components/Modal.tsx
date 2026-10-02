@@ -24,7 +24,7 @@ export default function Modal({
           onClick={onClose}
         >
           <motion.div
-            className="panel w-full max-w-lg p-6"
+            className="panel mx-4 w-full max-w-lg max-h-[90vh] overflow-y-auto p-5 sm:mx-6 sm:p-6"
             initial={{ opacity: 0, y: 28, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -32,14 +32,14 @@ export default function Modal({
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-5 flex items-start justify-between gap-3">
-              <div>
+              <div className="min-w-0">
                 <div className="eyebrow mb-1">Dialog</div>
-                <h3 className="font-display text-xl font-semibold tracking-tight">{title}</h3>
+                <h3 className="font-display text-lg font-semibold tracking-tight sm:text-xl">{title}</h3>
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="btn-ghost rounded-full p-1.5"
+                className="btn-ghost shrink-0 rounded-full p-1.5"
                 aria-label="Close"
               >
                 <X className="h-4.5 w-4.5" />

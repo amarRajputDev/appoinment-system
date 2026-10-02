@@ -150,7 +150,7 @@ export default function DashboardPage() {
       ]
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-5 sm:space-y-7">
       <PageHeader
         eyebrow="Studio overview"
         title={`Welcome back, ${user?.name?.split(' ')[0] || 'there'}`}
@@ -172,17 +172,17 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-5">
-        <Card className="lg:col-span-3 p-5">
-          <div className="mb-5 flex items-start justify-between gap-3">
+        <Card className="lg:col-span-3 p-4 sm:p-5">
+          <div className="mb-4 flex flex-wrap items-start justify-between gap-3 sm:mb-5">
             <div className="min-w-0">
               <div className="eyebrow mb-1">Demand</div>
-              <h2 className="font-display text-lg font-semibold tracking-tight">Bookings trend</h2>
+              <h2 className="font-display text-base font-semibold tracking-tight sm:text-lg">Bookings trend</h2>
             </div>
             <span className="chip shrink-0 border-[color:var(--line)] bg-[color:var(--accent-soft)] text-[color:var(--accent)]">
               30 days
             </span>
           </div>
-          <div className="h-72">
+          <div className="h-56 sm:h-72">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chart}>
                 <defs>
@@ -209,15 +209,15 @@ export default function DashboardPage() {
           </div>
         </Card>
 
-        <Card className="lg:col-span-2 p-5">
-          <div className="mb-5">
+        <Card className="lg:col-span-2 p-4 sm:p-5">
+          <div className="mb-4 sm:mb-5">
             <div className="eyebrow mb-1">Composition</div>
-            <h2 className="font-display text-lg font-semibold tracking-tight">By status</h2>
+            <h2 className="font-display text-base font-semibold tracking-tight sm:text-lg">By status</h2>
           </div>
-          <div className="h-64">
+          <div className="h-52 sm:h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={donut} dataKey="value" nameKey="name" innerRadius={58} outerRadius={88} stroke="none">
+                <Pie data={donut} dataKey="value" nameKey="name" innerRadius={52} outerRadius={78} stroke="none">
                   {donut.map((entry) => (
                     <Cell key={entry.name} fill={STATUS_COLORS[entry.name] || '#ea580c'} />
                   ))}

@@ -102,10 +102,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           borderRight: '1px solid rgba(255,255,255,0.06)',
         }}
       >
-        <div className="flex items-center justify-between px-5 pb-6 pt-6">
+        <div className="flex items-center justify-between gap-2 px-4 pb-5 pt-5 sm:px-5 sm:pb-6 sm:pt-6">
           <Logo />
           <button
-            className="btn-ghost p-1.5 lg:hidden"
+            className="btn-ghost shrink-0 p-1.5 lg:hidden"
             style={{ color: 'var(--sidebar-text)' }}
             onClick={() => setMobileOpen(false)}
             aria-label="Close menu"
@@ -169,24 +169,34 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
       <div className="lg:pl-[260px]">
         <header
-          className="sticky top-0 z-20 flex items-center gap-3 border-b border-[color:var(--line)] px-4 py-3.5 lg:px-8"
+          className="sticky top-0 z-20 flex items-center gap-2 border-b border-[color:var(--line)] px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3.5 lg:px-8"
           style={{
             background: 'color-mix(in srgb, var(--paper) 82%, transparent)',
             backdropFilter: 'blur(14px) saturate(1.15)',
             WebkitBackdropFilter: 'blur(14px) saturate(1.15)',
           }}
         >
-          <button className="btn-ghost p-1.5 lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open menu">
+          <button
+            className="btn-ghost shrink-0 p-1.5 lg:hidden"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open menu"
+          >
             <Menu className="h-5 w-5" />
           </button>
           <div className="min-w-0 flex-1">
-            <div className="truncate font-display text-sm font-semibold tracking-tight">{user?.name}</div>
-            <div className="truncate text-[0.72rem] font-medium tracking-wide uppercase" style={{ color: 'var(--muted)' }}>
-              {user?.role} · Tempo Studio
+            <div className="truncate font-display text-[0.92rem] font-semibold tracking-tight sm:text-sm">
+              {user?.name}
+            </div>
+            <div
+              className="truncate text-[0.68rem] font-medium tracking-wide uppercase sm:text-[0.72rem]"
+              style={{ color: 'var(--muted)' }}
+            >
+              {user?.role}
+              <span className="hidden sm:inline"> · Tempo Studio</span>
             </div>
           </div>
           <div
-            className="hidden items-center gap-2 rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-medium sm:flex"
+            className="hidden items-center gap-2 rounded-full border border-[color:var(--line)] px-3 py-1.5 text-xs font-medium md:flex"
             style={{ color: 'var(--muted)' }}
           >
             <span className="relative flex h-1.5 w-1.5">
@@ -195,10 +205,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </span>
             Live
           </div>
-          <ThemeToggle className="lg:hidden" />
+          <ThemeToggle className="shrink-0 lg:hidden" />
           <Link
             href="/profile"
-            className="flex h-9 w-9 items-center justify-center rounded-full text-[0.78rem] font-semibold text-white shadow-lg"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[0.72rem] font-semibold text-white shadow-lg sm:h-9 sm:w-9 sm:text-[0.78rem]"
             style={{ background: 'linear-gradient(145deg, #ea580c, #9a3412)' }}
             aria-label="Account"
           >
@@ -206,10 +216,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           </Link>
         </header>
 
-        <main className="relative z-10 px-4 pb-24 pt-7 lg:px-8 lg:pb-12">{children}</main>
+        <main className="relative z-10 px-3 pb-24 pt-5 sm:px-4 sm:pt-7 lg:px-8 lg:pb-12">{children}</main>
 
         <nav
-          className="fixed bottom-0 left-0 right-0 z-20 grid grid-cols-5 gap-1 border-t border-[color:var(--line)] px-2 py-2 lg:hidden"
+          className="fixed bottom-0 left-0 right-0 z-20 grid max-w-full grid-cols-5 gap-0.5 overflow-hidden border-t border-[color:var(--line)] px-1 py-1.5 sm:gap-1 sm:px-2 sm:py-2 lg:hidden"
           style={{
             background: 'color-mix(in srgb, var(--paper) 92%, transparent)',
             backdropFilter: 'blur(14px)',
@@ -221,12 +231,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               key={link.to}
               href={link.to}
               className={clsx(
-                'flex flex-col items-center gap-0.5 rounded-xl px-1 py-1.5 text-[0.65rem] font-semibold',
+                'flex min-w-0 flex-col items-center gap-0.5 rounded-xl px-0.5 py-1.5 text-[0.6rem] font-semibold sm:px-1 sm:text-[0.65rem]',
                 pathname === link.to ? 'text-[color:var(--accent)]' : 'text-[color:var(--muted)]'
               )}
             >
-              <link.icon className="h-[1.15rem] w-[1.15rem]" strokeWidth={1.8} />
-              {link.label.split(' ')[0]}
+              <link.icon className="h-[1.05rem] w-[1.05rem] sm:h-[1.15rem] sm:w-[1.15rem]" strokeWidth={1.8} />
+              <span className="w-full truncate text-center">{link.label.split(' ')[0]}</span>
             </Link>
           ))}
         </nav>
